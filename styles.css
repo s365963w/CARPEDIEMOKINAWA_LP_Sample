@@ -609,7 +609,7 @@ p {
 
 .collage {
   position: relative;
-  min-height: 700px;
+  min-height: 680px;
 }
 
 .collage img {
@@ -622,10 +622,11 @@ p {
 
 .collage-main {
   right: 0;
-  top: 48px;
-  width: 55%;
-  height: 590px;
-  object-position: center 42%;
+  top: 18px;
+  width: 50%;
+  height: 430px;
+  object-position: center;
+  z-index: 1;
 }
 
 .collage-float {
@@ -634,17 +635,17 @@ p {
 
 .float-one {
   left: 0;
-  top: 144px;
-  width: 45%;
-  height: 320px;
+  top: 96px;
+  width: 56%;
+  height: 380px;
   z-index: 2;
 }
 
 .float-two {
-  left: 12%;
+  left: 22%;
   bottom: 0;
-  width: 44%;
-  height: 300px;
+  width: 48%;
+  height: 285px;
   z-index: 3;
 }
 
@@ -1372,24 +1373,25 @@ p {
   }
 
   .collage {
-    min-height: 520px;
+    min-height: 560px;
   }
 
   .collage-main {
-    width: 78%;
-    height: 430px;
-    top: 22px;
+    right: 0;
+    top: 0;
+    width: 72%;
+    height: 300px;
   }
 
   .float-one {
-    top: 88px;
-    width: 56%;
-    height: 220px;
+    top: 150px;
+    width: 62%;
+    height: 230px;
   }
 
   .float-two {
-    left: 7%;
-    width: 58%;
+    left: 24%;
+    width: 68%;
     height: 210px;
   }
 
