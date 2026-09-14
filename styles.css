@@ -40,7 +40,7 @@ body::before {
   z-index: 60;
   pointer-events: none;
   background: var(--black);
-  animation: pageFade .45s cubic-bezier(.76, 0, .24, 1) .08s forwards;
+  animation: pageFade .45s cubic-bezier(.76, 0, .24, 1) 2.55s forwards;
 }
 
 img,
@@ -65,20 +65,26 @@ select {
   inset: 0;
   z-index: 70;
   display: grid;
+  gap: clamp(4px, 1vw, 12px);
   place-items: center;
+  align-content: center;
   background: var(--black);
   color: var(--bone);
   pointer-events: none;
-  animation: loaderExit .5s cubic-bezier(.76, 0, .24, 1) .18s forwards;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(244, 241, 232, .1), transparent 18rem),
+    var(--black);
+  animation: loaderExit .45s cubic-bezier(.76, 0, .24, 1) 2.55s forwards;
 }
 
-.page-loader span {
-  font-family: var(--serif);
-  font-size: clamp(34px, 8vw, 96px);
-  font-style: italic;
-  letter-spacing: 0;
-  clip-path: inset(0 0 0 0);
-  animation: loaderText .42s cubic-bezier(.22, 1, .36, 1) both;
+.loader-logo {
+  display: block;
+  width: min(78vw, 980px);
+  height: auto;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(16px) scale(.96);
+  animation: loaderLogo 3s cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .site-header {
@@ -609,15 +615,17 @@ p {
 .collage img {
   position: absolute;
   object-fit: cover;
+  object-position: center;
   border-radius: 8px;
   box-shadow: 0 24px 76px rgba(0, 0, 0, .46);
 }
 
 .collage-main {
-  right: 4%;
-  top: 0;
-  width: 58%;
-  height: 620px;
+  right: 0;
+  top: 48px;
+  width: 55%;
+  height: 590px;
+  object-position: center 42%;
 }
 
 .collage-float {
@@ -626,16 +634,18 @@ p {
 
 .float-one {
   left: 0;
-  top: 120px;
-  width: 47%;
+  top: 144px;
+  width: 45%;
   height: 320px;
+  z-index: 2;
 }
 
 .float-two {
-  left: 16%;
+  left: 12%;
   bottom: 0;
   width: 44%;
   height: 300px;
+  z-index: 3;
 }
 
 .immersive-kids {
@@ -1108,14 +1118,27 @@ p {
 @keyframes loaderExit {
   to {
     opacity: 0;
+    filter: blur(10px);
     visibility: hidden;
   }
 }
 
-@keyframes loaderText {
-  from {
-    clip-path: inset(0 100% 0 0);
-    transform: translateY(20px);
+@keyframes loaderLogo {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(18px) scale(.96);
+  }
+  32%,
+  84% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-8px) scale(1.01);
   }
 }
 
@@ -1355,6 +1378,7 @@ p {
   .collage-main {
     width: 78%;
     height: 430px;
+    top: 22px;
   }
 
   .float-one {
