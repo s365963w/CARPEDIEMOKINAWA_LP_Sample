@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>カルペディエム沖縄｜Web集客 現状診断＋改善提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --ink:#122A4D;
+    --steel:#3E5F82;
+    --sky:#6C93B8;
+    --mist:#DCE5EC;
+    --paper:#F5F4EF;
+    --white:#FFFFFF;
+    --gray:#5B6472;
+    --line:#26456B;
+    --hair:rgba(11,31,58,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:100%;height:100%;background:#05101F;font-family:'Noto Sans JP',sans-serif;-webkit-font-smoothing:antialiased;}
+  body{overflow:hidden;position:relative;}
+
+  .stage{width:1600px;height:900px;position:absolute;left:50%;top:50%;background:var(--navy);box-shadow:0 30px 90px rgba(0,0,0,.55);font-size:19px;transform-origin:center center;}
+
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--paper);color:var(--navy);padding:3.6em 4.6em 3.2em;overflow:hidden;}
+  .slide.active{display:flex;}
+  .slide .kicker{font-size:1.2em;font-weight:700;letter-spacing:.02em;color:var(--steel);margin-bottom:.7em;}
+  .slide h1{font-size:3.5em;font-weight:900;line-height:1.28;color:var(--navy);letter-spacing:-.01em;}
+  .slide h1 .accent{color:var(--steel);}
+  .slide .lead{font-size:1.5em;color:var(--gray);margin-top:.6em;line-height:1.55;max-width:34em;}
+  .body-area{flex:1;display:flex;flex-direction:column;justify-content:center;margin-top:1.1em;}
+
+  /* ---------- Cover ---------- */
+  #s1{background:var(--navy);color:var(--white);padding:0;}
+  #s1 .ring{position:absolute;width:52em;height:52em;border:.12em solid rgba(255,255,255,.08);border-radius:50%;right:-16em;top:-14em;}
+  #s1 .ring2{position:absolute;width:34em;height:34em;border:.12em solid rgba(255,255,255,.10);border-radius:50%;right:-4em;bottom:-12em;}
+  #s1 .mat{position:absolute;inset:0;background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.028) 0 1px, transparent 1px 64px);}
+  #s1 .cover-inner{position:absolute;left:6.5em;top:50%;transform:translateY(-58%);text-align:left;max-width:58em;}
+  #s1 .logo{width:5.6em;height:5.6em;border-radius:.5em;background:#fff;padding:.5em;margin-bottom:1.3em;display:flex;align-items:center;justify-content:center;}
+  #s1 .logo img{width:100%;height:100%;object-fit:contain;}
+  #s1 h1{font-size:5.0em;font-weight:900;color:var(--white);line-height:1.18;letter-spacing:-.01em;}
+  #s1 .sub{font-size:1.75em;color:var(--mist);margin-top:1.0em;font-weight:500;line-height:1.5;}
+  #s1 .foot{position:absolute;left:6.5em;bottom:2.2em;font-size:1.1em;color:rgba(255,255,255,.5);letter-spacing:.06em;}
+
+  /* ---------- generic components ---------- */
+  .grid{display:grid;gap:1.0em;align-content:start;}
+  .g6{grid-template-columns:repeat(3,1fr);}
+  .g4{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .card{background:var(--white);border:1px solid var(--hair);border-radius:.5em;padding:1.5em 1.7em;align-self:start;}
+  .card h3{font-size:1.35em;font-weight:700;color:var(--navy);margin-bottom:.35em;line-height:1.35;}
+  .card p{font-size:1.18em;color:var(--gray);line-height:1.45;}
+
+  .badge{display:inline-flex;align-items:center;gap:.45em;font-size:1.15em;font-weight:700;padding:.3em .78em;border-radius:2em;}
+  .badge.good{background:var(--navy);color:var(--white);}
+  .badge.mid{background:transparent;color:var(--steel);border:1.4px solid var(--steel);}
+
+  .icon{display:inline-flex;align-items:center;justify-content:center;width:2.7em;height:2.7em;border-radius:.4em;background:var(--mist);color:var(--navy);flex:none;}
+  .icon svg{width:1.45em;height:1.45em;stroke:var(--navy);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+
+  .flowline{display:flex;align-items:center;gap:.5em;flex-wrap:wrap;}
+  .flowstep{background:var(--white);border:1px solid var(--hair);border-radius:.45em;padding:1.1em 1.5em;font-weight:700;font-size:1.35em;color:var(--navy);}
+  .flowstep.dim{color:var(--gray);border-style:dashed;background:transparent;}
+  .arrow{color:var(--sky);font-size:1.5em;font-weight:700;}
+
+  .statement{font-size:1.9em;font-weight:900;color:var(--navy);line-height:1.45;margin-top:1.2em;}
+  .statement .accent{color:var(--steel);}
+
+  .note-box{background:var(--ink);color:var(--mist);border-radius:.5em;padding:1.3em 1.6em;font-size:1.28em;line-height:1.55;margin-top:1.1em;}
+
+  ul.plain{list-style:none;}
+  ul.plain li{position:relative;padding-left:1.5em;font-size:1.4em;color:var(--ink);line-height:1.6;margin-bottom:.4em;}
+  ul.plain li::before{content:"";position:absolute;left:0;top:.6em;width:.5em;height:.5em;background:var(--steel);border-radius:50%;}
+
+  /* belt-stripe progress (thematic: BJJ belt stripes) */
+  .stripe{position:absolute;left:4.6em;right:4.6em;bottom:1.6em;display:flex;gap:.35em;z-index:5;}
+  .stripe i{flex:1;height:.34em;background:rgba(11,31,58,.14);border-radius:.2em;}
+  .stripe i.on{background:var(--navy);}
+  #s1 .stripe, #s1{ } /* cover has no stripe overlay visually (kept subtle) */
+
+  .navbar{position:absolute;right:1.6em;bottom:1.3em;display:flex;align-items:center;gap:.9em;z-index:10;font-size:1.15em;}
+  .navbar button{width:2.6em;height:2.6em;border-radius:50%;border:1.4px solid rgba(11,31,58,.25);background:rgba(255,255,255,.55);color:var(--navy);font-size:1.1em;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .navbar button:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .navbar button.print-btn{width:auto;border-radius:2em;padding:0 1.05em;font-size:.95em;font-weight:900;letter-spacing:.03em;}
+  .navbar .count{font-weight:700;color:var(--navy);letter-spacing:.04em;min-width:4.2em;text-align:center;}
+  #s1 ~ .navbar, .navbar{color:var(--navy);}
+  .navbar.on-dark button{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);color:#fff;}
+  .navbar.on-dark .count{color:#fff;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:2.0em;align-content:start;}
+  .col{background:var(--white);border:1px solid var(--hair);border-radius:.6em;padding:2.0em 2.2em;display:flex;flex-direction:column;align-self:start;}
+  .col h3{font-size:1.55em;font-weight:900;color:var(--navy);margin-bottom:.6em;}
+  .col.dim{background:transparent;border-style:dashed;}
+
+  .pillar{background:var(--navy);color:var(--white);border-radius:.6em;padding:1.9em 2.1em;align-self:start;}
+  .pillar .num{font-size:1.15em;font-weight:700;color:var(--sky);letter-spacing:.1em;margin-bottom:.5em;}
+  .pillar h3{font-size:1.65em;font-weight:900;line-height:1.4;}
+
+  .tag{display:inline-block;font-size:1.1em;font-weight:700;color:var(--steel);border:1px solid var(--steel);border-radius:2em;padding:.28em .9em;margin-bottom:.6em;}
+
+  table.cmp{width:100%;border-collapse:collapse;font-size:1.2em;}
+  table.cmp th,table.cmp td{border:1px solid var(--hair);padding:1.0em 1.15em;text-align:left;vertical-align:top;}
+  table.cmp th{background:var(--navy);color:#fff;font-weight:700;}
+  table.cmp td.rowh{font-weight:700;background:var(--mist);}
+  table.cmp td.reco{background:#EDF3F8;}
+
+  .hub-inputs{display:flex;justify-content:space-between;gap:.8em;position:relative;padding-bottom:1.5em;border-bottom:2px solid var(--steel);}
+  .hub-chip{background:var(--white);border:1px solid var(--hair);border-radius:2em;padding:.55em 1.3em;font-weight:700;font-size:1.15em;color:var(--navy);position:relative;}
+  .hub-chip::after{content:"";position:absolute;left:50%;bottom:-1.5em;width:2px;height:1.5em;background:var(--steel);transform:translateX(-50%);}
+  .hub-drop{display:flex;justify-content:center;color:var(--steel);font-size:1.6em;font-weight:700;margin:.1em 0;}
+  .hub-center{background:var(--navy);color:#fff;border-radius:.6em;padding:1.5em 2em;text-align:center;}
+  .hub-center .hub-title{font-size:2.1em;font-weight:900;margin-bottom:.6em;}
+  .hub-tags{display:flex;justify-content:center;gap:.6em;flex-wrap:wrap;}
+  .hub-tags span{background:rgba(255,255,255,.14);border-radius:2em;padding:.4em 1.1em;font-size:1.15em;font-weight:700;}
+
+
+
+  /* ---------- Final credit slide ---------- */
+  #s17{background:var(--navy);color:var(--white);padding:4.2em 5.4em 3.8em;}
+  #s17 .kicker{color:var(--sky);}
+  #s17 h1{color:var(--white);font-size:4.1em;line-height:1.18;}
+  #s17 .lead{color:rgba(255,255,255,.72);font-size:1.35em;max-width:36em;}
+  .final-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:2.2em;align-items:stretch;margin-top:1.2em;}
+  .final-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:.75em;padding:2.0em 2.1em;box-shadow:0 24px 72px rgba(0,0,0,.20);}
+  .final-panel h3{font-size:1.55em;font-weight:900;margin-bottom:.75em;color:var(--white);}
+  .final-panel p{font-size:1.12em;line-height:1.65;color:rgba(255,255,255,.72);}
+  .final-link{display:flex;align-items:center;justify-content:space-between;gap:1em;margin-top:1.2em;padding:1.05em 1.25em;border-radius:.6em;background:var(--white);color:var(--navy);font-size:1.18em;font-weight:900;text-decoration:none;}
+  .final-link .arrowmark{font-size:1.25em;color:var(--steel);}
+  .credit-list{display:grid;gap:.9em;margin-top:1em;}
+  .credit-item{border-top:1px solid rgba(255,255,255,.14);padding-top:.9em;}
+  .credit-label{display:block;color:var(--sky);font-size:.9em;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2em;}
+  .credit-name{display:block;color:var(--white);font-size:1.28em;font-weight:900;line-height:1.45;}
+  .credit-name a{color:var(--white);text-decoration:underline;text-underline-offset:.18em;text-decoration-thickness:1px;}
+  #s17 .stripe i{background:rgba(255,255,255,.18);}
+  #s17 .stripe i.on{background:var(--white);}
+
+  @media print{
+    @page{size:A4 landscape;margin:0;}
+    html,body{width:auto;height:auto;background:#fff;overflow:visible !important;}
+    body{position:static !important;}
+    .stage{width:100vw;height:auto;position:static;left:auto;top:auto;transform:none !important;box-shadow:none;margin:0;background:#fff;}
+    .slide{display:flex !important;position:relative;inset:auto;width:100vw;height:56.25vw;max-height:100vh;page-break-after:always;break-after:page;overflow:hidden;}
+    .slide:last-of-type{page-break-after:auto;break-after:auto;}
+    .navbar,.stripe{display:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- 1 --------------------------------------------------------------- -->
+  <section class="slide active" id="s1">
+    <div class="mat"></div><div class="ring"></div><div class="ring2"></div>
+    <div class="cover-inner">
+      <div class="logo"><img src="data:image/png;base64,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" alt="CARPE DIEM OKINAWA"></div>
+      <h1>Web集客 現状診断<br>＋ 改善提案</h1>
+      <p class="sub">Instagram動画制作と連動した、<br>Webからの申込み導線改善</p>
+    </div>
+    <div class="foot">2026.09</div>
+  </section>
+
+  <!-- 2 --------------------------------------------------------------- -->
+  <section class="slide" id="s2">
+    <div class="kicker">今回やりたいこと</div>
+    <h1>動画だけ作って<br><span class="accent">終わりにしない</span></h1>
+    <div class="body-area">
+      <ul class="plain" style="font-size:1.6em;">
+        <li>Instagram動画を3本作る</li>
+        <li>Webも少し見直す</li>
+        <li>最初から大掛かりには作り直さない</li>
+        <li>動画から体験・来館までをつなげる</li>
+      </ul>
+    </div>
+    <div class="stripe"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 3 --------------------------------------------------------------- -->
+  <section class="slide" id="s3">
+    <div class="kicker">今回の結論</div>
+    <h1>最初から、サイト全体を<br>作り直す必要はありません</h1>
+    <div class="body-area">
+      <p class="lead" style="max-width:44em;font-weight:700;color:var(--navy);">今ある良い部分はそのまま使う。<br>直した方がいいところだけ直す。</p>
+      <div class="two-col" style="margin-top:1.5em;">
+        <div class="pillar">
+          <div class="num" style="font-size:1.5em;color:#fff;letter-spacing:0;">① 動画 → 体験・来館</div>
+        </div>
+        <div class="pillar">
+          <div class="num" style="font-size:1.5em;color:#fff;letter-spacing:0;">② Web更新をもっと楽にする</div>
+        </div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 4 --------------------------------------------------------------- -->
+  <section class="slide" id="s4">
+    <div class="kicker">Webサイトの現状</div>
+    <h1>6つの視点で<br>ざっくり確認</h1>
+    <div class="body-area">
+      <div class="grid g6">
+        <div class="card"><span class="badge good">○ 概ね良好</span><h3 style="margin-top:.6em;">Web基盤</h3></div>
+        <div class="card"><span class="badge mid">△ 改善余地あり</span><h3 style="margin-top:.6em;">情報品質</h3></div>
+        <div class="card"><span class="badge good">○ 概ね良好</span><h3 style="margin-top:.6em;">発見性</h3></div>
+        <div class="card"><span class="badge mid">△ 改善余地あり</span><h3 style="margin-top:.6em;">信頼性</h3></div>
+        <div class="card"><span class="badge mid">△ 改善余地あり</span><h3 style="margin-top:.6em;">行動導線</h3></div>
+        <div class="card"><span class="badge mid">△ 改善余地あり</span><h3 style="margin-top:.6em;">継続運用</h3></div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 5 --------------------------------------------------------------- -->
+  <section class="slide" id="s5">
+    <div class="kicker">現在の良いところ</div>
+    <h1>すでに、良い土台があります</h1>
+    <div class="body-area">
+      <div class="grid g4" style="grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;">
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 3 11v10h8V15h2v6h8V11z"/></svg></div><h3 style="margin-top:.7em;">料金・コース内容が具体的</h3></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></div><h3 style="margin-top:.7em;">北谷・アラハビーチという立地</h3></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-5h6v5M9 8h1M9 12h1M14 8h1M14 12h1"/></svg></div><h3 style="margin-top:.7em;">施設・設備情報が分かりやすい</h3></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.9 3.1-6 7-6s7 2.1 7 6"/></svg></div><h3 style="margin-top:.7em;">インストラクター情報が充実</h3></div>
+        <div class="card" style="grid-column:1 / span 2;"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/></svg></div><h3 style="margin-top:.7em;">LINE・電話で相談しやすい</h3></div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 6 --------------------------------------------------------------- -->
+  <section class="slide" id="s6">
+    <div class="kicker">気になるところ</div>
+    <h1>集客を強くする前に、<br>ここだけ直しておきたい</h1>
+    <div class="body-area">
+      <div class="grid g4" style="grid-template-columns:repeat(2,1fr);">
+        <div class="card"><p>会費支払日の記載がバラバラ</p></div>
+        <div class="card"><p>休会・退会ルールがページごとに違う</p></div>
+        <div class="card"><p>日本語／英語で情報が違う</p></div>
+        <div class="card"><p>規約に古い内容が残っている</p></div>
+        <div class="card"><p>採用リンクが動いていない</p></div>
+        <div class="card"><p>体験申込が少し面倒</p></div>
+        <div class="card"><p>ブログがほぼ止まっている</p></div>
+        <div class="card"><p>スケジュールが見にくい</p></div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 7 --------------------------------------------------------------- -->
+  <section class="slide" id="s7">
+    <div class="kicker">今、一番もったいないところ</div>
+    <h1>ここで<span class="accent">人が離れている</span><br>かもしれません</h1>
+    <div class="body-area">
+      <p class="lead">Instagramを見て興味を持っても、体験までたどり着いていない人がいるかもしれません。</p>
+      <div class="flowline" style="justify-content:space-between;margin-top:.6em;font-size:.78em;">
+        <div class="flowstep">Instagram動画</div><span class="arrow">→</span>
+        <div class="flowstep">Webを見る</div><span class="arrow">→</span>
+        <div class="flowstep dim">内容を確認？</div><span class="arrow">→</span>
+        <div class="flowstep dim">体験申込？</div><span class="arrow">→</span>
+        <div class="flowstep dim">予約？</div><span class="arrow">→</span>
+        <div class="flowstep dim">来館？</div>
+      </div>
+      <div class="note-box">どこで離れてしまっているかは、まだ分かっていません。まずは実際の動きを見てみます。</div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 8 --------------------------------------------------------------- -->
+  <section class="slide" id="s8">
+    <div class="kicker">今回制作する動画3本</div>
+    <h1>動画にも、それぞれ役割を持たせる</h1>
+    <div class="body-area">
+      <div class="grid g3">
+        <div class="card"><span class="tag">01 · KIDS</span><h3>キッズ・保護者向け</h3></div>
+        <div class="card"><span class="tag">02 · BEGINNER</span><h3>大人・初心者向け</h3></div>
+        <div class="card"><span class="tag">03 · BRAND</span><h3>ジムの雰囲気・国際色</h3></div>
+      </div>
+      <div class="statement" style="margin-top:2em;">動画 <span class="accent">→</span> 最適なWeb情報 <span class="accent">→</span> 体験・見学</div>
+      <p class="lead" style="margin-top:.8em;font-size:1.1em;">※テーマは今の案。話を聞いてから決めます。</p>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 9 --------------------------------------------------------------- -->
+  <section class="slide" id="s9">
+    <div class="kicker">理想の集客導線</div>
+    <h1>再生数ではなく、<br>「来館」までを導線として考える</h1>
+    <div class="body-area">
+      <div class="flowline" style="justify-content:space-between;flex-wrap:wrap;">
+        <div class="flowstep">Instagram動画</div><span class="arrow">→</span>
+        <div class="flowstep">広告・投稿</div><span class="arrow">→</span>
+        <div class="flowstep">Web／LP</div><span class="arrow">→</span>
+        <div class="flowstep">体験・見学</div><span class="arrow">→</span>
+        <div class="flowstep">予約確定</div><span class="arrow">→</span>
+        <div class="flowstep" style="background:var(--navy);color:#fff;">来館</div>
+      </div>
+      <div class="statement">再生数ではなく、<span class="accent">「来館」までをひとつの導線</span>として考える。</div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 10 -------------------------------------------------------------- -->
+  <section class="slide" id="s10">
+    <div class="kicker">Webはどうする</div>
+    <h1>3パターンから考える</h1>
+    <div class="body-area">
+      <table class="cmp">
+        <tr><th style="width:16%;">&nbsp;</th><th>A｜既存サイトを一部改善</th><th class="reco">B｜集客用LPを1本つくる</th><th>C｜ターゲット別LP</th></tr>
+        <tr><td class="rowh">向いている場合</td><td>既存サイトをできるだけ活かしたい</td><td class="reco">動画との相性をシンプルに見たい</td><td>3本の対象が明確に異なる</td></tr>
+        <tr><td class="rowh">メリット</td><td>既存情報を活用できる／改修範囲が小さい</td><td class="reco">既存サイトを大きく触らず済む／受け皿が明確／将来拡張しやすい</td><td>動画ごとに最適化できる</td></tr>
+        <tr><td class="rowh">留意点</td><td>動画ごとの訴求を分けにくい</td><td class="reco">3本の対象が大きく違う場合は情報量が増える</td><td>制作・更新範囲が増える</td></tr>
+        <tr><td class="rowh">今のところ</td><td>&nbsp;</td><td class="reco" style="font-weight:700;">Bが一番合いそう</td><td>&nbsp;</td></tr>
+      </table>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 11 -------------------------------------------------------------- -->
+  <section class="slide" id="s11">
+    <div class="kicker">体験申込をもっとシンプルに</div>
+    <h1>最初はこれくらいで十分</h1>
+    <div class="body-area">
+      <div class="two-col">
+        <div class="col dim">
+          <h3 style="color:var(--gray);">BEFORE</h3>
+          <ul class="plain" style="color:var(--gray);">
+            <li>会員登録</li><li>顔写真</li><li>規約同意</li><li>LINE登録</li><li>希望日時をLINE連絡</li><li>予約</li>
+          </ul>
+        </div>
+        <div class="col" style="border-color:var(--navy);">
+          <h3>AFTER案</h3>
+          <ul class="plain">
+            <li>お名前</li><li>ご連絡先</li><li>希望クラス</li><li>希望日時</li>
+          </ul>
+          <p style="margin-top:.8em;font-weight:700;color:var(--navy);">↓ すぐに体験申込へ</p>
+        </div>
+      </div>
+      <div class="note-box">顔写真や規約同意は、入会時に回せるか確認します。（今はまだ案です）</div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 12 -------------------------------------------------------------- -->
+  <section class="slide" id="s12">
+    <div class="kicker">情報発信の考え方</div>
+    <h1>それぞれの役割を分ける</h1>
+    <div class="body-area">
+      <div class="grid g4" style="grid-template-columns:repeat(4,1fr);">
+        <div class="card"><h3>Web</h3><p style="font-weight:700;color:var(--navy);">正式な情報を見る場所</p></div>
+        <div class="card"><h3>Instagram</h3><p style="font-weight:700;color:var(--navy);">知ってもらう・興味を持ってもらう</p></div>
+        <div class="card"><h3>LINE</h3><p style="font-weight:700;color:var(--navy);">連絡する</p></div>
+        <div class="card"><h3>Calendar</h3><p style="font-weight:700;color:var(--navy);">スタッフが予定を更新する</p></div>
+      </div>
+      <div class="statement" style="font-size:1.3em;">Instagramだけに頼らず、<span class="accent">Webでも最新情報が分かる</span>ようにしたい。</div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 13 -------------------------------------------------------------- -->
+  <section class="slide" id="s13">
+    <div class="kicker">ブログから「NEWS / UPDATES」へ</div>
+    <h1>更新のためのブログではなく、<br>情報を届ける仕組みへ</h1>
+    <div class="body-area" style="margin-top:.6em;">
+      <div class="two-col" style="gap:1.6em;">
+        <div class="col dim" style="padding:1.3em 1.6em;">
+          <h3 style="font-size:1.3em;margin-bottom:.4em;">BEFORE｜従来型ブログ</h3>
+          <ul class="plain" style="color:var(--gray);font-size:1.15em;">
+            <li>更新が続きにくい</li><li>古い記事が残る</li><li>投稿操作が負担になる可能性</li>
+          </ul>
+        </div>
+        <div class="col" style="border-color:var(--navy);padding:1.3em 1.6em;">
+          <h3 style="font-size:1.3em;margin-bottom:.4em;">AFTER案｜NEWS / UPDATES</h3>
+          <p style="font-size:1.05em;color:var(--gray);margin-bottom:.4em;">掲載するもの：</p>
+          <ul class="plain" style="font-size:1.15em;">
+            <li>営業・休館／クラス変更</li><li>イベント・大会結果</li><li>新クラス・キャンペーン</li><li>重要なお知らせ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="statement" style="font-size:1.15em;margin-top:.7em;">ブログを書くことが目的じゃなくて、<span class="accent">必要な情報だけ更新できればOK。</span></div>
+      <div class="note-box" style="margin-top:.6em;padding:.9em 1.4em;font-size:1.1em;">スタッフが無理なく続けられる方法を優先します。やり方は運用を見ながら決めます。</div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 14 -------------------------------------------------------------- -->
+  <section class="slide" id="s14">
+    <div class="kicker">スケジュール</div>
+    <h1>もっと見やすく、<br>もっと更新しやすく</h1>
+    <div class="body-area">
+      <div class="two-col">
+        <div class="col">
+          <h3>見る人</h3>
+          <ul class="plain">
+            <li>今日のクラス</li><li>明日のクラス</li><li>Kids</li><li>Beginner</li><li>担当</li><li>休講</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>更新する人</h3>
+          <p style="font-size:1.4em;font-weight:700;color:var(--navy);line-height:1.6;">1か所更新するだけ</p><p style="font-size:1.0em;color:var(--gray);line-height:1.5;margin-top:.6em;">Google Calendar等を候補に確認</p>
+        </div>
+      </div>
+      <div class="statement" style="font-size:1.35em;">見る側も簡単。<span class="accent">更新する側も簡単。</span></div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 15 -------------------------------------------------------------- -->
+  <section class="slide" id="s15">
+    <div class="kicker">情報の流れ</div>
+    <h1>Webを情報の<br>まんなかにする</h1>
+    <div class="body-area">
+      <div class="hub-inputs">
+        <div class="hub-chip">Instagram</div>
+        <div class="hub-chip">Google検索</div>
+        <div class="hub-chip">Google Maps</div>
+        <div class="hub-chip">QR</div>
+        <div class="hub-chip">紹介</div>
+      </div>
+      <div class="hub-drop">↓</div>
+      <div class="hub-center">
+        <div class="hub-title">公式Web</div>
+        <div class="hub-tags"><span>NEWS</span><span>SCHEDULE</span><span>CLASSES</span><span>PRICE</span><span>FAQ</span><span>TRIAL</span></div>
+      </div>
+      <div class="hub-drop">↓</div>
+      <div class="flowline" style="justify-content:center;gap:.6em;">
+        <div class="flowstep">体験・見学</div><span class="arrow">→</span><div class="flowstep" style="background:var(--navy);color:#fff;">予約・連絡</div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+  </section>
+
+  <!-- 16 -------------------------------------------------------------- -->
+  <section class="slide" id="s16">
+    <div class="kicker">これからの流れ</div>
+    <h1>こんな順番で進める</h1>
+    <div class="body-area">
+      <div class="grid g6" style="grid-template-columns:repeat(6,1fr);">
+        <div class="card"><span class="tag">1</span><p style="font-weight:700;color:var(--navy);">まず話を聞く</p></div>
+        <div class="card"><span class="tag">2</span><p style="font-weight:700;color:var(--navy);">動画とWebの方向を決める</p></div>
+        <div class="card"><span class="tag">3</span><p style="font-weight:700;color:var(--navy);">動画制作＋Web修正</p></div>
+        <div class="card"><span class="tag">4</span><p style="font-weight:700;color:var(--navy);">公開</p></div>
+        <div class="card"><span class="tag">5</span><p style="font-weight:700;color:var(--navy);">反応を見る</p></div>
+        <div class="card"><span class="tag">6</span><p style="font-weight:700;color:var(--navy);">必要なら次を直す</p></div>
+      </div>
+      <div class="statement" style="text-align:center;margin-top:1.3em;">まず小さくやってみる。<span class="accent">反応を見て、次を考える。</span></div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+  </section>
+
+
+
+  <!-- 17 -------------------------------------------------------------- -->
+  <section class="slide" id="s17">
+    <div class="kicker">Sample LP / Credit</div>
+    <h1>サンプルLPはこちら</h1>
+    <p class="lead">動画から体験・来館までをつなげる集客用LPのサンプルです。オーナー確認後、正式情報へ差し替えて本番化します。</p>
+    <div class="body-area">
+      <div class="final-wrap">
+        <div class="final-panel">
+          <h3>LPページへの誘導</h3>
+          <p>下記リンクから、現在のサンプルLPを確認できます。</p>
+          <a class="final-link" href="https://s365963w.github.io/CARPEDIEMOKINAWA_LP_Sample/" target="_blank" rel="noreferrer">
+            <span>LPページを開く</span>
+            <span class="arrowmark">→</span>
+          </a>
+        </div>
+        <div class="final-panel">
+          <h3>制作・監修</h3>
+          <p>この資料とLPは、Sによって作成されました。</p>
+          <div class="credit-list">
+            <div class="credit-item">
+              <span class="credit-label">Supervised by</span>
+              <span class="credit-name"><a href="https://webassist.canae.tokyo/" target="_blank" rel="noreferrer">WA Web Assist</a> 監修</span>
+            </div>
+            <div class="credit-item">
+              <span class="credit-label">Presented by</span>
+              <span class="credit-name">株式会社CANAE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stripe"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+  </section>
+
+  <div class="navbar" id="navbar">
+    <button id="prev" aria-label="前へ">‹</button>
+    <div class="count"><span id="cur">01</span> / <span id="total">17</span></div>
+    <button id="next" aria-label="次へ">›</button>
+    <button class="print-btn" id="printDeck" type="button" aria-label="資料を印刷">PRINT</button>
+  </div>
+</div>
+
+<script>
+  const stage = document.getElementById('stage');
+  function fitStage(){
+    const w = window.innerWidth, h = window.innerHeight;
+    const scale = Math.min(w/1600, h/900);
+    stage.style.transform = 'translate(-50%,-50%) scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+  const curEl = document.getElementById('cur');
+  const totalEl = document.getElementById('total');
+  totalEl.textContent = String(total).padStart(2,'0');
+
+  function render(){
+    slides.forEach((s,i)=> s.classList.toggle('active', i===idx));
+    curEl.textContent = String(idx+1).padStart(2,'0');
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('on-dark', idx===0);
+    if (history.replaceState) history.replaceState(null,'','#'+(idx+1));
+  }
+  function go(delta){
+    idx = Math.max(0, Math.min(total-1, idx+delta));
+    render();
+  }
+  document.getElementById('prev').addEventListener('click', ()=>go(-1));
+  document.getElementById('next').addEventListener('click', ()=>go(1));
+  document.getElementById('printDeck').addEventListener('click', ()=>window.print());
+  window.addEventListener('keydown', (e)=>{
+    if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { go(1); e.preventDefault(); }
+    if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { go(-1); e.preventDefault(); }
+  });
+  // click zones (left third / right third) for quick advance, ignore clicks on controls
+  document.getElementById('stage').addEventListener('click', (e)=>{
+    if (e.target.closest('#navbar')) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x > rect.width*0.66) go(1);
+    else if (x < rect.width*0.20) go(-1);
+  });
+  // deep-link support: #7 opens slide 7
+  (function initHash(){
+    const h = parseInt(location.hash.replace('#',''), 10);
+    if (!isNaN(h) && h>=1 && h<=total) idx = h-1;
+    render();
+  })();
+</script>
+</body>
+</html>
