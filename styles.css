@@ -538,6 +538,22 @@ p {
   margin-top: 38px;
 }
 
+.price-block {
+  padding: 20px 22px 10px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .045);
+}
+
+.price-label {
+  margin: 0 0 4px;
+  color: #f4c156;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
 .price-row,
 .session {
   display: flex;
@@ -551,20 +567,42 @@ p {
   color: var(--ash);
 }
 
-.price-row small {
-  display: block;
-  margin-top: 6px;
-  color: #f4c156;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .08em;
-}
-
 .price-row strong {
   color: var(--bone);
   font-family: var(--serif);
-  font-size: clamp(20px, 3vw, 34px);
+  font-size: clamp(20px, 2.8vw, 30px);
   font-weight: 400;
+  white-space: nowrap;
+}
+
+.price-english {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.price-english article {
+  padding: 16px;
+  border: 1px solid rgba(244, 193, 86, .28);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(244, 193, 86, .12), rgba(255, 255, 255, .035));
+}
+
+.price-english span {
+  display: block;
+  color: #f4c156;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.price-english p {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, .86);
+  font-size: clamp(14px, 1.55vw, 17px);
+  line-height: 1.65;
 }
 
 .price-pending strong {
@@ -1406,6 +1444,14 @@ p {
   .site-footer {
     flex-direction: column;
     gap: 6px;
+  }
+
+  .price-block {
+    padding: 18px 16px 8px;
+  }
+
+  .price-english {
+    grid-template-columns: 1fr;
   }
 
   .class-row {
