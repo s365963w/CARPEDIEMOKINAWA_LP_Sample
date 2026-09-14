@@ -362,50 +362,6 @@ p {
   text-transform: uppercase;
 }
 
-.play-orbit {
-  position: absolute;
-  right: clamp(18px, 5vw, 76px);
-  bottom: clamp(34px, 7vw, 84px);
-  z-index: 4;
-  width: 118px;
-  height: 118px;
-  border: 1px solid rgba(255, 255, 255, .6);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .06);
-  color: var(--white);
-  display: grid;
-  place-content: center;
-  gap: 8px;
-  cursor: pointer;
-  backdrop-filter: blur(20px);
-  animation: floatPulse 4.8s ease-in-out infinite;
-}
-
-.play-orbit::before {
-  content: "";
-  position: absolute;
-  inset: -13px;
-  border: 1px solid rgba(255, 255, 255, .16);
-  border-radius: inherit;
-  animation: spin 10s linear infinite;
-}
-
-.play-orbit span:last-child {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.play-icon {
-  width: 0;
-  height: 0;
-  margin-left: 7px;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  border-left: 16px solid var(--bone);
-}
-
 .marquee {
   overflow: hidden;
   border-block: 1px solid var(--line);
@@ -777,6 +733,13 @@ p {
 
 .proof-grid p {
   color: rgba(255, 255, 255, .68);
+}
+
+.inline-note {
+  display: inline-block;
+  margin-left: .35em;
+  color: #f4c156;
+  font-weight: 800;
 }
 
 .schedule-sample {
@@ -1230,13 +1193,6 @@ p {
     padding-bottom: 28px;
   }
 
-  .play-orbit {
-    width: 88px;
-    height: 88px;
-    right: 20px;
-    bottom: 180px;
-  }
-
   .editorial-gallery {
     display: grid;
     min-height: auto;
@@ -1333,7 +1289,6 @@ p {
     width: 100%;
   }
 
-  .play-orbit,
   .word-bjj {
     display: none;
   }

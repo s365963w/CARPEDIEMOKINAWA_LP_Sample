@@ -2,7 +2,6 @@ const revealTargets = document.querySelectorAll("[data-reveal]");
 const parallaxTargets = document.querySelectorAll(".feature-frame, .collage-float, .kinetic-word");
 const header = document.querySelector(".site-header");
 const video = document.querySelector(".hero-video");
-const soundToggle = document.querySelector(".play-orbit");
 const trialForm = document.querySelector("[data-sample-form]");
 
 const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
@@ -80,11 +79,24 @@ window.addEventListener("resize", syncParallax);
 syncHeader();
 syncParallax();
 
-if (soundToggle && video) {
-  soundToggle.addEventListener("click", () => {
-    video.muted = !video.muted;
-    soundToggle.querySelector("span:last-child").textContent = video.muted ? "音声 OFF" : "音声 ON";
+if (video) {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+
+  const playHeroVideo = () => {
+    const attempt = video.play();
+    if (attempt && typeof attempt.catch === "function") {
+      attempt.catch(() => {});
+    }
+  };
+
+  window.addEventListener("load", playHeroVideo, { once: true });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) playHeroVideo();
   });
+  playHeroVideo();
 }
 
 if (trialForm) {
