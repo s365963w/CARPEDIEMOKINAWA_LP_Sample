@@ -90,8 +90,9 @@
   #s1 ~ .navbar, .navbar{color:var(--navy);}
   .navbar.on-dark button{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.35);color:#fff;}
   .navbar.on-dark .count{color:#fff;}
-  .print-floating{position:fixed;right:18px;top:18px;z-index:50;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.88);color:var(--navy);padding:12px 18px;font-size:13px;font-weight:900;letter-spacing:.08em;box-shadow:0 14px 42px rgba(0,0,0,.28);cursor:pointer;backdrop-filter:blur(14px);}
-  .print-floating:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .zoom-controls{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 12px);z-index:50;display:none;align-items:center;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(5,16,31,.72);box-shadow:0 14px 42px rgba(0,0,0,.28);backdrop-filter:blur(16px);transform:translateX(-50%);}
+  .zoom-controls button{min-width:40px;height:36px;border:0;border-radius:999px;background:rgba(255,255,255,.9);color:var(--navy);font-size:15px;font-weight:900;}
+  .zoom-controls .zoom-reset{min-width:58px;font-size:12px;letter-spacing:.04em;}
 
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:2.0em;align-content:start;}
   .col{background:var(--white);border:1px solid var(--hair);border-radius:.6em;padding:2.0em 2.2em;display:flex;flex-direction:column;align-self:start;}
@@ -132,6 +133,8 @@
   .final-panel p{font-size:1.12em;line-height:1.65;color:rgba(255,255,255,.72);}
   .final-link{display:flex;align-items:center;justify-content:space-between;gap:1em;margin-top:1.2em;padding:1.05em 1.25em;border-radius:.6em;background:var(--white);color:var(--navy);font-size:1.18em;font-weight:900;text-decoration:none;}
   .final-link .arrowmark{font-size:1.25em;color:var(--steel);}
+  .final-print{width:100%;margin-top:1.0em;border:1px solid rgba(255,255,255,.24);border-radius:.6em;background:rgba(255,255,255,.1);color:var(--white);padding:1.05em 1.25em;font-size:1.12em;font-weight:900;letter-spacing:.08em;cursor:pointer;text-align:left;}
+  .final-print:hover{background:var(--white);color:var(--navy);}
   .credit-list{display:grid;gap:.9em;margin-top:1em;}
   .credit-item{border-top:1px solid rgba(255,255,255,.14);padding-top:.9em;}
   .credit-label{display:block;color:var(--sky);font-size:.9em;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2em;}
@@ -147,7 +150,7 @@
     .stage{width:297mm;height:auto;position:static;left:auto;top:auto;transform:none !important;box-shadow:none;margin:0;background:#fff;font-size:3.56mm;}
     .slide{display:flex !important;position:relative;inset:auto;width:297mm;height:167.0625mm;page-break-after:always;break-after:page;overflow:hidden;}
     .slide:last-of-type{page-break-after:auto;break-after:auto;}
-    .navbar,.stripe,.print-floating{display:none !important;}
+    .navbar,.stripe,.zoom-controls,.final-print{display:none !important;}
   }
 
   @media screen and (max-width: 720px){
@@ -157,12 +160,16 @@
     .navbar button{width:42px;height:42px;background:rgba(255,255,255,.92);}
     .navbar .count{min-width:72px;color:#fff;font-size:14px;}
     .navbar.on-dark .count{color:#fff;}
-    .print-floating{top:calc(env(safe-area-inset-top) + 10px);right:10px;padding:10px 13px;font-size:11px;}
+    .zoom-controls{display:flex;}
   }
 </style>
 </head>
 <body>
-<button class="print-floating" id="printDeck" type="button" aria-label="資料を印刷">PRINT</button>
+<div class="zoom-controls" aria-label="スマートフォン表示倍率">
+  <button id="zoomOut" type="button" aria-label="縮小">−</button>
+  <button class="zoom-reset" id="zoomReset" type="button" aria-label="表示倍率を戻す">100%</button>
+  <button id="zoomIn" type="button" aria-label="拡大">＋</button>
+</div>
 <div class="stage" id="stage">
 
   <!-- 1 --------------------------------------------------------------- -->
@@ -478,6 +485,7 @@
             <span>LPページを開く</span>
             <span class="arrowmark">→</span>
           </a>
+          <button class="final-print" id="printDeck" type="button">資料を印刷する / PRINT</button>
         </div>
         <div class="final-panel">
           <h3>制作・監修</h3>
@@ -507,18 +515,29 @@
 
 <script>
   const stage = document.getElementById('stage');
+  const zoomReset = document.getElementById('zoomReset');
+  let mobileZoom = 1;
+  let lastBaseScale = 1;
+
+  function updateZoomLabel(){
+    if (!zoomReset) return;
+    zoomReset.textContent = Math.round(mobileZoom * 100) + '%';
+  }
+
   function fitStage(){
     const w = window.innerWidth, h = window.innerHeight;
     const isSmall = window.matchMedia('(max-width: 720px)').matches;
     const isPortrait = isSmall && h > w;
     if (isPortrait) {
-      const readableScale = Math.min(0.62, Math.max((w - 24) / 1600, (h - 170) / 900));
+      lastBaseScale = Math.min(0.62, Math.max((w - 24) / 1600, (h - 170) / 900));
+      const readableScale = lastBaseScale * mobileZoom;
       stage.style.left = '12px';
-      stage.style.top = '58px';
+      stage.style.top = '68px';
       stage.style.transformOrigin = 'top left';
       stage.style.transform = 'scale(' + readableScale + ')';
       document.body.style.minWidth = (1600 * readableScale + 24) + 'px';
-      document.body.style.minHeight = (900 * readableScale + 140) + 'px';
+      document.body.style.minHeight = (900 * readableScale + 156) + 'px';
+      updateZoomLabel();
       return;
     }
     const usableHeight = isSmall ? Math.max(360, h - 92) : h;
@@ -529,6 +548,7 @@
     stage.style.transform = 'translate(-50%,-50%) scale(' + scale + ')';
     document.body.style.minWidth = '';
     document.body.style.minHeight = '';
+    updateZoomLabel();
   }
   window.addEventListener('resize', fitStage);
   fitStage();
@@ -554,13 +574,26 @@
   document.getElementById('prev').addEventListener('click', ()=>go(-1));
   document.getElementById('next').addEventListener('click', ()=>go(1));
   document.getElementById('printDeck').addEventListener('click', ()=>window.print());
+  document.getElementById('zoomOut').addEventListener('click', ()=>{
+    mobileZoom = Math.max(0.75, +(mobileZoom - 0.12).toFixed(2));
+    fitStage();
+  });
+  document.getElementById('zoomIn').addEventListener('click', ()=>{
+    mobileZoom = Math.min(1.9, +(mobileZoom + 0.12).toFixed(2));
+    fitStage();
+  });
+  zoomReset.addEventListener('click', ()=>{
+    mobileZoom = 1;
+    fitStage();
+    window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+  });
   window.addEventListener('keydown', (e)=>{
     if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { go(1); e.preventDefault(); }
     if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) { go(-1); e.preventDefault(); }
   });
   // click zones (left third / right third) for quick advance, ignore clicks on controls
   document.getElementById('stage').addEventListener('click', (e)=>{
-    if (e.target.closest('#navbar')) return;
+    if (e.target.closest('#navbar') || e.target.closest('.zoom-controls')) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     if (x > rect.width*0.66) go(1);
