@@ -551,6 +551,15 @@ p {
   color: var(--ash);
 }
 
+.price-row small {
+  display: block;
+  margin-top: 6px;
+  color: #f4c156;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
 .price-row strong {
   color: var(--bone);
   font-family: var(--serif);
@@ -645,6 +654,50 @@ p {
   position: relative;
   z-index: 2;
   max-width: 820px;
+}
+
+.kids-benefit {
+  width: fit-content;
+  max-width: min(100%, 560px);
+  margin: 28px 0 24px;
+  padding: 18px 20px;
+  border: 1px solid rgba(244, 193, 86, .48);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(244, 193, 86, .18), rgba(255, 255, 255, .055)),
+    rgba(0, 0, 0, .2);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(18px);
+}
+
+.kids-benefit span {
+  display: block;
+  color: #f4c156;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.kids-benefit strong {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-size: clamp(24px, 3.2vw, 42px);
+  font-weight: 400;
+  line-height: 1.02;
+}
+
+.kids-benefit p {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, .84);
+  font-size: clamp(15px, 1.7vw, 18px);
+}
+
+.kids-benefit small {
+  color: #f4c156;
+  font-size: .78em;
+  font-weight: 800;
 }
 
 .image-run {
